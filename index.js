@@ -36,14 +36,17 @@ function render() {
           score: 0,
           prompt: getExpression(),
         };
+        page.countdown.classList.add("started");
+        page.countdown.style.animationDuration = `${timerLength}ms`;
       }
       break;
     case "running":
       if (state.target <= now) {
         time = "Done!";
         canStart = true;
-        canReset = false;
+        canReset = true;
         prompt = "Game over!";
+        page.countdown.classList.remove("started");
       } else {
         time = durationToString(state.target - now);
         canStart = false;
@@ -60,7 +63,7 @@ function render() {
   page.score.textContent = `Score: ${score}`;
   page.start.disabled = !canStart;
   page.reset.disabled = !canReset;
-  page.answer.disabled = !canReset;
+  page.answer.disabled = canStart;
 
   requestAnimationFrame(render);
 }
@@ -114,9 +117,11 @@ function correct() {
 function incorrect() {
   page.answer.classList.add("incorrect");
   page.prompt.classList.add("incorrect");
+  page.answer.placeholder = `${eval(state.prompt)}`;
   setTimeout(() => {
     page.answer.classList.remove("incorrect");
     page.prompt.classList.remove("incorrect");
+    page.answer.placeholder = "";
   }, 500);
 }
 

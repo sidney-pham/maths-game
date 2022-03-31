@@ -22,6 +22,21 @@ main {
   font-size: 48px;
 }
 
+#countdown.started {
+  animation-name: timer;
+  animation-timing-function: cubic-bezier(0.64, 0, 0.78, 0);
+}
+
+@keyframes timer {
+  from {
+    color: green;
+  }
+
+  to {
+    color: crimson;
+  }
+}
+
 #prompt {
   background: grey;
   text-align: center;
@@ -59,6 +74,10 @@ main {
 
 #answer.incorrect {
   border-color: crimson;
+}
+
+::placeholder {
+  color: rgba(220, 20, 60, 0.6);
 }
 
 button {
